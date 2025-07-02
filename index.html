@@ -227,5 +227,57 @@
     </div>
 </footer>
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // Función para mostrar una sección
+    function mostrarSeccion(id) {
+        const secciones = document.querySelectorAll('.seccion');
+        secciones.forEach(sec => sec.classList.remove('visible'));
+
+        const seccionMostrada = document.getElementById(id);
+        if (seccionMostrada) {
+            seccionMostrada.classList.add('visible');
+            setTimeout(() => {
+                seccionMostrada.scrollIntoView({ behavior: "smooth", block: "start" });
+            }, 50);
+        }
+
+        const botones = document.querySelectorAll('nav ul li button');
+        botones.forEach(btn => btn.classList.remove('activo'));
+
+        const botonActivo = Array.from(botones).find(btn => btn.dataset.seccion === id);
+        if (botonActivo) botonActivo.classList.add('activo');
+    }
+
+    // Activar eventos para cada botón del nav
+    document.querySelectorAll('nav ul li button').forEach(boton => {
+        boton.addEventListener('click', function () {
+            const id = this.dataset.seccion;
+            mostrarSeccion(id);
+        });
+    });
+
+    // Funcionalidad del botón "Leer más"
+    const btnLeerMas = document.getElementById("leerMasBtn");
+    const textoCompleto = document.getElementById("textoCompleto");
+
+    if (btnLeerMas && textoCompleto) {
+        btnLeerMas.addEventListener("click", function () {
+            if (textoCompleto.style.display === "none" || textoCompleto.style.display === "") {
+                textoCompleto.style.display = "block";
+                btnLeerMas.textContent = "Leer menos";
+                textoCompleto.scrollIntoView({ behavior: "smooth", block: "start" });
+            } else {
+                textoCompleto.style.display = "none";
+                btnLeerMas.textContent = "Leer más";
+            }
+        });
+    }
+
+});
+</script>
+
+    
 </body>
 </html>
